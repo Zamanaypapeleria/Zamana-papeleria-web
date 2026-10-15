@@ -1,99 +1,125 @@
+// =========================================================
+// MI LISTA - ZAMANA Y PAPELERÍA
+// =========================================================
+
 const productosDisponibles =
     window.productos || [];
 
 
+// =========================================================
+// ELEMENTOS DE LA PÁGINA
+// =========================================================
+
 const quoteItems =
-    document.getElementById(
-        "quoteItems"
-    );
-
-const emptyQuote =
-    document.getElementById(
-        "emptyQuote"
-    );
-
-const quoteSummary =
-    document.getElementById(
-        "quoteSummary"
-    );
+    document.getElementById("quoteItems");
 
 const quoteProductCount =
-    document.getElementById(
-        "quoteProductCount"
-    );
+    document.getElementById("quoteProductCount");
 
 const quoteType =
-    document.getElementById(
-        "quoteType"
-    );
+    document.getElementById("quoteType");
 
 const quoteTotal =
-    document.getElementById(
-        "quoteTotal"
-    );
-
-const pendingPriceMessage =
-    document.getElementById(
-        "pendingPriceMessage"
-    );
+    document.getElementById("quoteTotal");
 
 const customerName =
-    document.getElementById(
-        "customerName"
-    );
+    document.getElementById("customerName");
 
 const customerNotes =
-    document.getElementById(
-        "customerNotes"
-    );
+    document.getElementById("customerNotes");
+
+const sendWhatsApp =
+    document.getElementById("sendWhatsApp");
+
+const clearList =
+    document.getElementById("clearList");
+
+const floatingListLink =
+    document.getElementById("floatingListLink");
 
 
 // =========================================================
-// LISTA
+// LEER LISTA
 // =========================================================
 
 function leerLista() {
 
-    let lista =
-        JSON.parse(
+    let listaGuardada = [];
 
-            localStorage.getItem(
-                "listaZamana"
-            )
+    try {
 
-            ||
+        listaGuardada =
+            JSON.parse(
+                localStorage.getItem("listaZamana")
+                ||
+                "[]"
+            );
 
-            "[]"
+    } catch (error) {
 
-        );
+        listaGuardada = [];
+
+    }
 
 
-    return lista.map(
+    if (!Array.isArray(listaGuardada)) {
 
-        function (item) {
+        return [];
 
-            if (
-                typeof item === "string"
-            ) {
+    }
+
+
+    return listaGuardada
+        .map(
+
+            function (item) {
+
+                // Compatibilidad con listas antiguas
+                // donde solamente se guardaba el ID.
+
+                if (typeof item === "string") {
+
+                    return {
+
+                        id: item,
+
+                        cantidad: 1,
+
+                        variante: null
+
+                    };
+
+                }
+
 
                 return {
 
-                    id: item,
+                    id: item.id,
 
-                    cantidad: 1,
+                    cantidad:
+                        Number(item.cantidad) > 0
+                            ?
+                            Number(item.cantidad)
+                            :
+                            1,
 
-                    variante: null
+                    variante:
+                        item.variante || null
 
                 };
 
             }
 
+        )
+        .filter(
 
-            return item;
+            function (item) {
 
-        }
+                return Boolean(item.id);
 
-    );
+            }
+
+        );
 
 }
 
@@ -102,17 +128,56 @@ let lista =
     leerLista();
 
 
+// =========================================================
+// GUARDAR LISTA
+// =========================================================
+
 function guardarLista() {
 
     localStorage.setItem(
 
         "listaZamana",
 
-        JSON.stringify(
-            lista
-        )
+        JSON.stringify(lista)
 
     );
+
+
+    actualizarBotonFlotante();
+
+}
+
+
+// =========================================================
+// RUTA DE IMÁGENES
+// =========================================================
+
+function rutaImagenPagina(ruta) {
+
+    if (!ruta) {
+
+        return "";
+
+    }
+
+
+    if (
+        ruta.startsWith("http://")
+        ||
+        ruta.startsWith("https://")
+        ||
+        ruta.startsWith("data:")
+        ||
+        ruta.startsWith("/")
+    ) {
+
+        return ruta;
+
+    }
+
+
+    // lista.html está dentro de /pages/
+    return "../" + ruta;
 
 }
 
@@ -137,9 +202,7 @@ function formatearPrecio(precio) {
     return "$"
         +
         Math.round(precio)
-            .toLocaleString(
-                "es-CO"
-            );
+            .toLocaleString("es-CO");
 
 }
 
@@ -158,29 +221,184 @@ function obtenerPrecio(producto) {
 
 
     if (
-        quoteType.value
-        ===
-        "emprendedor"
-
+        quoteType.value === "emprendedor"
         &&
-
-        producto.aplicaDescuentoEmprendedor
-        !==
-        false
+        producto.aplicaDescuentoEmprendedor !== false
     ) {
 
         return Math.round(
-
-            producto.precioDetal
-            *
-            0.70
-
+            producto.precioDetal * 0.70
         );
 
     }
 
 
     return producto.precioDetal;
+
+}
+
+
+function textoPrecio(producto) {
+
+    const precio =
+        obtenerPrecio(producto);
+
+
+    if (precio === null) {
+
+        return "Por cotizar";
+
+    }
+
+
+    if (producto.precioDesde) {
+
+        return "Desde "
+            +
+            formatearPrecio(precio);
+
+    }
+
+
+    return formatearPrecio(precio);
+
+}
+
+
+// =========================================================
+// BUSCAR PRODUCTO
+// =========================================================
+
+function buscarProducto(id) {
+
+    return productosDisponibles.find(
+
+        function (producto) {
+
+            return producto.id === id;
+
+        }
+
+    );
+
+}
+
+
+// =========================================================
+// CONTADOR
+// =========================================================
+
+function cantidadTotal() {
+
+    return lista.reduce(
+
+        function (total, item) {
+
+            return total
+                +
+                Number(item.cantidad || 1);
+
+        },
+
+        0
+
+    );
+
+}
+
+
+function actualizarBotonFlotante() {
+
+    if (!floatingListLink) {
+
+        return;
+
+    }
+
+
+    const cantidad =
+        cantidadTotal();
+
+
+    floatingListLink.textContent =
+
+        cantidad > 0
+            ?
+            `Mi lista (${cantidad})`
+            :
+            "Mi lista";
+
+}
+
+
+// =========================================================
+// CAMBIAR CANTIDAD
+// =========================================================
+
+function aumentarCantidad(index) {
+
+    if (!lista[index]) {
+
+        return;
+
+    }
+
+
+    lista[index].cantidad++;
+
+
+    guardarLista();
+
+    mostrarLista();
+
+}
+
+
+function disminuirCantidad(index) {
+
+    if (!lista[index]) {
+
+        return;
+
+    }
+
+
+    if (lista[index].cantidad > 1) {
+
+        lista[index].cantidad--;
+
+    } else {
+
+        lista.splice(
+            index,
+            1
+        );
+
+    }
+
+
+    guardarLista();
+
+    mostrarLista();
+
+}
+
+
+// =========================================================
+// ELIMINAR PRODUCTO
+// =========================================================
+
+function eliminarProducto(index) {
+
+    lista.splice(
+        index,
+        1
+    );
+
+
+    guardarLista();
+
+    mostrarLista();
 
 }
 
@@ -195,135 +413,178 @@ function mostrarLista() {
         "";
 
 
-    if (
-        lista.length === 0
-    ) {
+    actualizarBotonFlotante();
 
-        emptyQuote.classList.remove(
-            "hidden"
-        );
 
-        quoteSummary.classList.add(
-            "quote-summary-disabled"
-        );
+    // =====================================================
+    // LISTA VACÍA
+    // =====================================================
+
+    if (lista.length === 0) {
 
         quoteProductCount.textContent =
-            "0";
+            "0 productos";
+
 
         quoteTotal.textContent =
             "$0";
+
+
+        sendWhatsApp.disabled =
+            true;
+
+
+        clearList.disabled =
+            true;
+
+
+        quoteItems.innerHTML = `
+
+            <div class="empty-list">
+
+                <h3>
+                    Tu lista está vacía
+                </h3>
+
+                <p>
+                    Agrega productos desde el catálogo
+                    para preparar tu cotización.
+                </p>
+
+                <a
+                    href="catalogo.html?categoria=belleza"
+                    class="btn btn-primary"
+                >
+                    Ver catálogo
+                </a>
+
+            </div>
+
+        `;
+
 
         return;
 
     }
 
 
-    emptyQuote.classList.add(
-        "hidden"
-    );
-
-    quoteSummary.classList.remove(
-        "quote-summary-disabled"
-    );
+    sendWhatsApp.disabled =
+        false;
 
 
-    const unidades =
-        lista.reduce(
-
-            function (total, item) {
-
-                return total
-                    +
-                    item.cantidad;
-
-            },
-
-            0
-
-        );
+    clearList.disabled =
+        false;
 
 
-    quoteProductCount.textContent =
-        unidades;
+    let totalGeneral =
+        0;
 
 
-    let total = 0;
+    let unidadesValidas =
+        0;
 
-    let pendientes = 0;
 
+    // =====================================================
+    // PRODUCTOS
+    // =====================================================
 
     lista.forEach(
 
         function (item, index) {
 
             const producto =
-                productosDisponibles.find(
-
-                    function (p) {
-
-                        return p.id
-                            ===
-                            item.id;
-
-                    }
-
-                );
+                buscarProducto(item.id);
 
 
-            if (
-                !producto
-            ) {
+            if (!producto) {
+
                 return;
+
             }
 
 
-            const precio =
-                obtenerPrecio(
-                    producto
-                );
+            const cantidad =
+                Number(item.cantidad || 1);
+
+
+            unidadesValidas +=
+                cantidad;
+
+
+            const precioUnitario =
+                obtenerPrecio(producto);
 
 
             let subtotal =
                 null;
 
 
-            if (
-                precio !== null
-            ) {
+            if (precioUnitario !== null) {
 
                 subtotal =
-                    precio
+                    precioUnitario
                     *
-                    item.cantidad;
+                    cantidad;
 
 
-                total +=
+                totalGeneral +=
                     subtotal;
-
-            } else {
-
-                pendientes++;
 
             }
 
 
-            const card =
-                document.createElement(
-                    "article"
-                );
+            // =================================================
+            // IMAGEN
+            // =================================================
+
+            let imagenHTML = `
+
+                <div class="quote-item-image">
+
+                    <div class="quote-item-placeholder">
+
+                        Imagen no disponible
+
+                    </div>
+
+                </div>
+
+            `;
 
 
-            card.className =
-                "quote-item";
+            if (
+                producto.imagenes
+                &&
+                producto.imagenes.length > 0
+            ) {
 
+                imagenHTML = `
+
+                    <div class="quote-item-image">
+
+                        <img
+                            src="${rutaImagenPagina(
+                                producto.imagenes[0]
+                            )}"
+                            alt="${producto.nombre}"
+                        >
+
+                    </div>
+
+                `;
+
+            }
+
+
+            // =================================================
+            // VARIANTE
+            // =================================================
 
             let varianteHTML =
                 "";
 
 
-            if (
-                item.variante
-            ) {
+            if (item.variante) {
 
                 varianteHTML = `
 
@@ -342,17 +603,36 @@ function mostrarLista() {
             }
 
 
+            // =================================================
+            // SUBTOTAL
+            // =================================================
+
+            const subtotalTexto =
+
+                subtotal === null
+                    ?
+                    "Por cotizar"
+                    :
+                    formatearPrecio(subtotal);
+
+
+            // =================================================
+            // TARJETA
+            // =================================================
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+
+            card.className =
+                "quote-item";
+
+
             card.innerHTML = `
 
-                <div class="quote-item-image">
-
-                    <div class="quote-item-placeholder">
-
-                        Imagen pendiente
-
-                    </div>
-
-                </div>
+                ${imagenHTML}
 
 
                 <div class="quote-item-info">
@@ -363,11 +643,13 @@ function mostrarLista() {
 
                     </p>
 
+
                     <h3>
 
                         ${producto.nombre}
 
                     </h3>
+
 
                     <p class="quote-item-presentation">
 
@@ -375,7 +657,9 @@ function mostrarLista() {
 
                     </p>
 
+
                     ${varianteHTML}
+
 
                     <p class="quote-item-unit-price">
 
@@ -383,9 +667,7 @@ function mostrarLista() {
 
                         <strong>
 
-                            ${formatearPrecio(
-                                precio
-                            )}
+                            ${textoPrecio(producto)}
 
                         </strong>
 
@@ -400,21 +682,27 @@ function mostrarLista() {
 
                         <button
                             class="quote-decrease"
-                            data-index="${index}">
+                            data-index="${index}"
+                            type="button"
+                        >
 
                             −
 
                         </button>
 
+
                         <span>
 
-                            ${item.cantidad}
+                            ${cantidad}
 
                         </span>
 
+
                         <button
                             class="quote-increase"
-                            data-index="${index}">
+                            data-index="${index}"
+                            type="button"
+                        >
 
                             +
 
@@ -425,22 +713,16 @@ function mostrarLista() {
 
                     <p class="quote-item-subtotal">
 
-                        ${
-                            subtotal === null
-                                ?
-                                "Por cotizar"
-                                :
-                                formatearPrecio(
-                                    subtotal
-                                )
-                        }
+                        ${subtotalTexto}
 
                     </p>
 
 
                     <button
-                            class="remove-quote-item"
-                            data-index="${index}">
+                        class="remove-quote-item"
+                        data-index="${index}"
+                        type="button"
+                    >
 
                         Eliminar
 
@@ -460,42 +742,51 @@ function mostrarLista() {
     );
 
 
-    quoteTotal.textContent =
-        formatearPrecio(
-            total
+    // =====================================================
+    // CONTADOR Y TOTAL
+    // =====================================================
+
+    quoteProductCount.textContent =
+
+        unidadesValidas
+        +
+        (
+            unidadesValidas === 1
+                ?
+                " producto"
+                :
+                " productos"
         );
 
 
-    if (
-        pendientes > 0
-    ) {
-
-        pendingPriceMessage
-            .classList
-            .remove(
-                "hidden"
-            );
+    quoteTotal.textContent =
+        formatearPrecio(
+            totalGeneral
+        );
 
 
-        pendingPriceMessage.textContent =
+    // =====================================================
+    // PRODUCTOS NO ENCONTRADOS
+    // =====================================================
 
-            pendientes
-            +
-            (
-                pendientes === 1
-                    ?
-                    " producto tiene precio por cotizar."
-                    :
-                    " productos tienen precio por cotizar."
-            );
+    if (unidadesValidas === 0) {
 
-    } else {
+        quoteItems.innerHTML = `
 
-        pendingPriceMessage
-            .classList
-            .add(
-                "hidden"
-            );
+            <div class="empty-list">
+
+                <h3>
+                    No se encontraron los productos guardados
+                </h3>
+
+                <p>
+                    Vacía la lista y agrega nuevamente
+                    los productos desde el catálogo.
+                </p>
+
+            </div>
+
+        `;
 
     }
 
@@ -506,7 +797,7 @@ function mostrarLista() {
 
 
 // =========================================================
-// CONTROLES
+// CONTROLES DE PRODUCTOS
 // =========================================================
 
 function activarControles() {
@@ -525,18 +816,13 @@ function activarControles() {
 
                     function () {
 
-                        const index =
+                        aumentarCantidad(
+
                             Number(
                                 boton.dataset.index
-                            );
+                            )
 
-
-                        lista[index].cantidad++;
-
-
-                        guardarLista();
-
-                        mostrarLista();
+                        );
 
                     }
 
@@ -561,31 +847,13 @@ function activarControles() {
 
                     function () {
 
-                        const index =
+                        disminuirCantidad(
+
                             Number(
                                 boton.dataset.index
-                            );
+                            )
 
-
-                        if (
-                            lista[index].cantidad > 1
-                        ) {
-
-                            lista[index].cantidad--;
-
-                        } else {
-
-                            lista.splice(
-                                index,
-                                1
-                            );
-
-                        }
-
-
-                        guardarLista();
-
-                        mostrarLista();
+                        );
 
                     }
 
@@ -610,20 +878,13 @@ function activarControles() {
 
                     function () {
 
-                        lista.splice(
+                        eliminarProducto(
 
                             Number(
                                 boton.dataset.index
-                            ),
-
-                            1
+                            )
 
                         );
-
-
-                        guardarLista();
-
-                        mostrarLista();
 
                     }
 
@@ -637,7 +898,7 @@ function activarControles() {
 
 
 // =========================================================
-// CAMBIO DE PRECIO
+// CAMBIO DE TIPO DE PRECIO
 // =========================================================
 
 quoteType.addEventListener(
@@ -650,244 +911,275 @@ quoteType.addEventListener(
 
 
 // =========================================================
-// VACIAR
+// VACIAR LISTA
 // =========================================================
 
-document
-    .getElementById(
-        "clearQuote"
-    )
-    .addEventListener(
+clearList.addEventListener(
 
-        "click",
+    "click",
 
-        function () {
+    function () {
 
-            lista = [];
+        if (lista.length === 0) {
 
-            guardarLista();
-
-            mostrarLista();
+            return;
 
         }
 
-    );
+
+        const confirmar =
+            confirm(
+                "¿Quieres vaciar toda tu lista?"
+            );
+
+
+        if (!confirmar) {
+
+            return;
+
+        }
+
+
+        lista = [];
+
+
+        guardarLista();
+
+        mostrarLista();
+
+    }
+
+);
 
 
 // =========================================================
 // WHATSAPP
 // =========================================================
 
-document
-    .getElementById(
-        "sendQuoteWhatsapp"
-    )
-    .addEventListener(
+sendWhatsApp.addEventListener(
 
-        "click",
+    "click",
 
-        function () {
+    function () {
 
-            if (
-                lista.length === 0
-            ) {
+        if (lista.length === 0) {
 
-                alert(
-                    "Tu lista está vacía."
-                );
-
-                return;
-
-            }
-
-
-            let mensaje =
-                "Hola, quiero cotizar el siguiente pedido en Zamana y Papelería:\n\n";
-
-
-            if (
-                customerName.value.trim()
-                !==
-                ""
-            ) {
-
-                mensaje +=
-
-                    "Nombre: "
-                    +
-                    customerName.value.trim()
-                    +
-                    "\n\n";
-
-            }
-
-
-            let total = 0;
-
-
-            lista.forEach(
-
-                function (item, index) {
-
-                    const producto =
-                        productosDisponibles.find(
-
-                            function (p) {
-
-                                return p.id
-                                    ===
-                                    item.id;
-
-                            }
-
-                        );
-
-
-                    if (
-                        !producto
-                    ) {
-                        return;
-                    }
-
-
-                    const precio =
-                        obtenerPrecio(
-                            producto
-                        );
-
-
-                    mensaje +=
-
-                        (index + 1)
-                        +
-                        ". "
-                        +
-                        producto.nombre
-                        +
-                        "\n";
-
-
-                    mensaje +=
-
-                        "Cantidad: "
-                        +
-                        item.cantidad
-                        +
-                        "\n";
-
-
-                    if (
-                        item.variante
-                    ) {
-
-                        mensaje +=
-
-                            "Opción: "
-                            +
-                            item.variante
-                            +
-                            "\n";
-
-                    }
-
-
-                    if (
-                        precio !== null
-                    ) {
-
-                        const subtotal =
-                            precio
-                            *
-                            item.cantidad;
-
-
-                        total +=
-                            subtotal;
-
-
-                        mensaje +=
-
-                            "Precio unitario: "
-                            +
-                            formatearPrecio(
-                                precio
-                            )
-                            +
-                            "\n";
-
-
-                        mensaje +=
-
-                            "Subtotal: "
-                            +
-                            formatearPrecio(
-                                subtotal
-                            )
-                            +
-                            "\n\n";
-
-                    } else {
-
-                        mensaje +=
-
-                            "Precio: por cotizar\n\n";
-
-                    }
-
-                }
-
+            alert(
+                "Tu lista está vacía."
             );
 
-
-            mensaje +=
-
-                "Total estimado: "
-                +
-                formatearPrecio(
-                    total
-                )
-                +
-                "\n";
-
-
-            if (
-                customerNotes.value
-                    .trim()
-                !==
-                ""
-            ) {
-
-                mensaje +=
-
-                    "\nObservaciones: "
-                    +
-                    customerNotes.value.trim()
-                    +
-                    "\n";
-
-            }
-
-
-            mensaje +=
-
-                "\n¿Me confirmas disponibilidad y valor final?";
-
-
-            window.open(
-
-                "https://wa.me/573508253530?text="
-                +
-                encodeURIComponent(
-                    mensaje
-                ),
-
-                "_blank"
-
-            );
+            return;
 
         }
 
-    );
 
+        const tipoPrecio =
+
+            quoteType.value === "emprendedor"
+                ?
+                "Precio emprendedor"
+                :
+                "Precio detal";
+
+
+        let mensaje =
+
+            "Hola, quiero cotizar el siguiente pedido en Zamana y Papelería:\n\n";
+
+
+        if (
+            customerName.value.trim()
+            !==
+            ""
+        ) {
+
+            mensaje +=
+
+                "Nombre: "
+                +
+                customerName.value.trim()
+                +
+                "\n";
+
+        }
+
+
+        mensaje +=
+
+            "Tipo de precio: "
+            +
+            tipoPrecio
+            +
+            "\n\n";
+
+
+        let totalGeneral =
+            0;
+
+
+        let numeroProducto =
+            1;
+
+
+        lista.forEach(
+
+            function (item) {
+
+                const producto =
+                    buscarProducto(
+                        item.id
+                    );
+
+
+                if (!producto) {
+
+                    return;
+
+                }
+
+
+                const cantidad =
+                    Number(
+                        item.cantidad || 1
+                    );
+
+
+                const precio =
+                    obtenerPrecio(
+                        producto
+                    );
+
+
+                mensaje +=
+
+                    numeroProducto
+                    +
+                    ". "
+                    +
+                    producto.nombre
+                    +
+                    "\n";
+
+
+                mensaje +=
+
+                    "Cantidad: "
+                    +
+                    cantidad
+                    +
+                    "\n";
+
+
+                if (item.variante) {
+
+                    mensaje +=
+
+                        "Opción: "
+                        +
+                        item.variante
+                        +
+                        "\n";
+
+                }
+
+
+                if (precio !== null) {
+
+                    const subtotal =
+                        precio
+                        *
+                        cantidad;
+
+
+                    totalGeneral +=
+                        subtotal;
+
+
+                    mensaje +=
+
+                        "Precio unitario: "
+                        +
+                        formatearPrecio(
+                            precio
+                        )
+                        +
+                        "\n";
+
+
+                    mensaje +=
+
+                        "Subtotal: "
+                        +
+                        formatearPrecio(
+                            subtotal
+                        )
+                        +
+                        "\n\n";
+
+                } else {
+
+                    mensaje +=
+
+                        "Precio: por cotizar\n\n";
+
+                }
+
+
+                numeroProducto++;
+
+            }
+
+        );
+
+
+        mensaje +=
+
+            "Total estimado: "
+            +
+            formatearPrecio(
+                totalGeneral
+            );
+
+
+        if (
+            customerNotes.value.trim()
+            !==
+            ""
+        ) {
+
+            mensaje +=
+
+                "\n\nNotas del pedido: "
+                +
+                customerNotes.value.trim();
+
+        }
+
+
+        mensaje +=
+
+            "\n\n¿Me confirmas disponibilidad y valor final?";
+
+
+        window.open(
+
+            "https://wa.me/573508253530?text="
+            +
+            encodeURIComponent(
+                mensaje
+            ),
+
+            "_blank"
+
+        );
+
+    }
+
+);
+
+
+// =========================================================
+// INICIAR
+// =========================================================
 
 mostrarLista();
