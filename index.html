@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Zamana y Papelería</title>
+
+    <link
+            rel="stylesheet"
+            href="css/styles.css"
+    >
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="main-header">
+
+    <button
+            id="menuButton"
+            class="header-icon"
+            type="button"
+            aria-label="Abrir menú"
+    >
+        ☰
+    </button>
+
+
+    <a
+            href="index.html"
+            class="brand"
+    >
+        Zamana y <span>Papelería</span>
+    </a>
+
+
+    <button
+            id="searchButton"
+            class="header-icon"
+            type="button"
+            aria-label="Buscar"
+    >
+        ⌕
+    </button>
+
+</header>
+
+
+<!-- =====================================================
+     BUSCADOR
+===================================================== -->
+
+<div
+        id="searchBox"
+        class="search-panel hidden"
+>
+
+    <input
+            id="searchInput"
+            type="text"
+            placeholder="¿Qué estás buscando?"
+    >
+
+    <button
+            id="searchSubmit"
+            type="button"
+    >
+        Buscar
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     MENÚ LATERAL
+===================================================== -->
+
+<div
+        id="overlay"
+        class="menu-overlay"
+></div>
+
+
+<aside
+        id="sideMenu"
+        class="side-menu"
+>
+
+    <div class="side-menu-top">
+
+        <div>
+            <p class="menu-small">
+                Menú
+            </p>
+
+            <h2>
+                Categorías
+            </h2>
+        </div>
+
+
+        <button
+                id="closeMenu"
+                class="close-menu"
+                type="button"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <nav class="menu-links">
+
+        <a href="index.html">
+            Inicio
+        </a>
+
+        <a href="pages/catalogo.html?categoria=belleza">
+            Belleza
+        </a>
+
+        <a href="pages/catalogo.html?categoria=papeleria">
+            Papelería
+        </a>
+
+        <a href="pages/catalogo.html?categoria=accesorios">
+            Accesorios
+        </a>
+
+        <a href="pages/catalogo.html?categoria=cajas">
+            Cajas
+        </a>
+
+        <a href="pages/lista.html">
+            Mi lista
+        </a>
+
+    </nav>
+
+</aside>
+
+
+<!-- =====================================================
+     CONTENIDO
+===================================================== -->
+
+<main>
+
+
+    <!-- =================================================
+         HERO
+    ================================================= -->
+
+    <section class="hero">
+
+        <div class="hero-text">
+
+            <span class="eyebrow">
+                ZAMANA Y PAPELERÍA
+            </span>
+
+
+            <h1>
+                Todo lo que te gusta,
+                <span>en un solo lugar.</span>
+            </h1>
+
+
+            <p>
+                Belleza, pestañas, accesorios, papelería
+                y cajas para regalar o emprender.
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a
+                        href="pages/catalogo.html?categoria=belleza"
+                        class="btn btn-primary"
+                >
+                    Ver catálogo
+                </a>
+
+                <a
+                        href="pages/lista.html"
+                        class="btn btn-light"
+                >
+                    Mi lista
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-decoration">
+
+            <div class="hero-circle hero-circle-one"></div>
+            <div class="hero-circle hero-circle-two"></div>
+
+            <div class="hero-card">
+
+                <span>
+                    Precio emprendedor
+                </span>
+
+                <strong>
+                    -30%
+                </strong>
+
+                <p>
+                    En productos seleccionados
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         CATEGORÍAS
+    ================================================= -->
+
+    <section class="home-section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="eyebrow">
+                    EXPLORA
+                </span>
+
+                <h2>
+                    Nuestras categorías
+                </h2>
+
+            </div>
+
+
+            <p>
+                Encuentra rápidamente lo que necesitas.
+            </p>
+
+        </div>
+
+
+        <div class="category-grid">
+
+
+            <a
+                    href="pages/catalogo.html?categoria=belleza"
+                    class="category-card"
+            >
+
+                <img
+                        src="assets/images/belleza.jpeg"
+                        alt="Belleza"
+                >
+
+                <div class="category-content">
+
+                    <h3>
+                        Belleza
+                    </h3>
+
+                    <p>
+                        Maquillaje, pestañas y uñas.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                    href="pages/catalogo.html?categoria=papeleria"
+                    class="category-card"
+            >
+
+                <img
+                        src="assets/images/Papeleria.jpeg"
+                        alt="Papelería"
+                >
+
+                <div class="category-content">
+
+                    <h3>
+                        Papelería
+                    </h3>
+
+                    <p>
+                        Útiles, oficina y manualidades.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                    href="pages/catalogo.html?categoria=accesorios"
+                    class="category-card"
+            >
+
+                <img
+                        src="assets/images/accesorios.jpeg"
+                        alt="Accesorios"
+                >
+
+                <div class="category-content">
+
+                    <h3>
+                        Accesorios
+                    </h3>
+
+                    <p>
+                        Pinzas, lazos y accesorios.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                    href="pages/catalogo.html?categoria=cajas"
+                    class="category-card"
+            >
+
+                <img
+                        src="assets/images/CAJAS.jpeg"
+                        alt="Cajas"
+                >
+
+                <div class="category-content">
+
+                    <h3>
+                        Cajas
+                    </h3>
+
+                    <p>
+                        Regalos y opciones para emprendedores.
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         DESTACADOS
+    ================================================= -->
+
+    <section class="home-section featured-section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="eyebrow">
+                    FAVORITOS
+                </span>
+
+                <h2>
+                    Productos destacados
+                </h2>
+
+            </div>
+
+
+            <p>
+                Desliza o deja que sigan pasando.
+            </p>
+
+        </div>
+
+
+        <div class="featured-viewport">
+
+            <div
+                    id="featuredTrack"
+                    class="featured-track"
+            >
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         EMPRENDEDOR
+    ================================================= -->
+
+    <section class="business-banner">
+
+        <div>
+
+            <span class="eyebrow">
+                ¿TIENES UN EMPRENDIMIENTO?
+            </span>
+
+            <h2>
+                Compra con precio emprendedor
+            </h2>
+
+            <p>
+                Los productos habilitados tienen un
+                30 % de descuento sobre el precio al detal.
+            </p>
+
+        </div>
+
+
+        <a
+                href="pages/catalogo.html?categoria=belleza"
+                class="btn btn-primary"
+        >
+            Ver productos
+        </a>
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div class="footer-inner">
+
+        <div>
+
+            <h2>
+                Zamana y Papelería
+            </h2>
+
+            <p>
+                También puedes visitarnos en nuestras redes.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a
+                    href="https://wa.me/573508253530"
+                    target="_blank"
+            >
+                WhatsApp
+            </a>
+
+            <a href="#">
+                TikTok
+            </a>
+
+            <a href="#">
+                Facebook
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =====================================================
+     MI LISTA FLOTANTE
+===================================================== -->
+
+<a
+        id="floatingListLink"
+        class="floating-list"
+        href="pages/lista.html"
+>
+    Mi lista
+</a>
+
+
+<script src="js/productos.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

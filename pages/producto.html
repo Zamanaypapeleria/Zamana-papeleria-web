@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Producto | Zamana y Papelería</title>
+
+    <link
+            rel="stylesheet"
+            href="../css/styles.css"
+    >
+
+</head>
+
+<body>
+
+
+<header class="main-header">
+
+    <button
+            id="backButton"
+            class="header-icon"
+            type="button"
+    >
+        ←
+    </button>
+
+
+    <a
+            href="../index.html"
+            class="brand"
+    >
+        Zamana y <span>Papelería</span>
+    </a>
+
+
+    <button
+            id="searchButton"
+            class="header-icon"
+            type="button"
+    >
+        ⌕
+    </button>
+
+</header>
+
+
+<div
+        id="searchBox"
+        class="search-panel hidden"
+>
+
+    <input
+            id="searchInput"
+            type="text"
+            placeholder="Buscar producto..."
+    >
+
+    <button
+            id="searchSubmit"
+            type="button"
+    >
+        Buscar
+    </button>
+
+</div>
+
+
+<main class="product-page">
+
+
+    <div class="breadcrumb">
+
+        <a href="../index.html">
+            Inicio
+        </a>
+
+        <span>›</span>
+
+        <a
+                id="productCategoryLink"
+                href="catalogo.html"
+        >
+            Catálogo
+        </a>
+
+        <span>›</span>
+
+        <strong id="productSubcategory">
+            Producto
+        </strong>
+
+    </div>
+
+
+    <section class="product-layout">
+
+
+        <!-- GALERÍA -->
+
+        <div class="product-gallery">
+
+            <div
+                    id="mainProductImage"
+                    class="main-product-image"
+            >
+                Imagen pendiente
+            </div>
+
+
+            <div
+                    id="productThumbnails"
+                    class="product-thumbnails"
+            >
+            </div>
+
+        </div>
+
+
+        <!-- INFORMACIÓN -->
+
+        <div class="product-info">
+
+            <p
+                    id="productCategory"
+                    class="eyebrow"
+            >
+                Producto
+            </p>
+
+
+            <h1 id="productName">
+                Producto
+            </h1>
+
+
+            <p
+                    id="productPresentation"
+                    class="product-presentation"
+            >
+            </p>
+
+
+            <div class="product-prices">
+
+                <p
+                        id="productPrice"
+                        class="product-main-price"
+                >
+                </p>
+
+                <p
+                        id="productWholesale"
+                        class="product-business-price"
+                >
+                </p>
+
+            </div>
+
+
+            <p
+                    id="productDescription"
+                    class="product-description"
+            >
+            </p>
+
+
+            <!-- VARIANTES -->
+
+            <div
+                    id="variantsSection"
+                    class="product-option-section"
+            >
+
+                <h3>
+                    Elige una opción
+                </h3>
+
+                <div
+                        id="variantButtons"
+                        class="variant-buttons"
+                >
+                </div>
+
+            </div>
+
+
+            <!-- CANTIDAD -->
+
+            <div class="product-option-section">
+
+                <h3>
+                    Cantidad
+                </h3>
+
+
+                <div class="quantity-control">
+
+                    <button
+                            id="decreaseQuantity"
+                            type="button"
+                    >
+                        −
+                    </button>
+
+                    <span id="quantity">
+                        1
+                    </span>
+
+                    <button
+                            id="increaseQuantity"
+                            type="button"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- BOTONES -->
+
+            <div class="product-action-buttons">
+
+                <button
+                        id="whatsappButton"
+                        class="btn whatsapp-button"
+                        type="button"
+                >
+                    Comprar por WhatsApp
+                </button>
+
+                <button
+                        id="addToListButton"
+                        class="btn btn-primary"
+                        type="button"
+                >
+                    Agregar a mi lista
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RECOMENDACIONES -->
+
+    <section class="recommendations-section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="eyebrow">
+                    TAMBIÉN TE PUEDE GUSTAR
+                </span>
+
+                <h2>
+                    Más productos
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div
+                id="recommendationGrid"
+                class="recommendation-grid"
+        >
+        </div>
+
+    </section>
+
+</main>
+
+
+<a
+        id="floatingListLink"
+        class="floating-list"
+        href="lista.html"
+>
+    Mi lista
+</a>
+
+
+<footer class="footer">
+
+    <div class="footer-inner">
+
+        <div>
+
+            <h2>
+                Zamana y Papelería
+            </h2>
+
+            <p>
+                También puedes visitarnos en nuestras redes.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a
+                    href="https://wa.me/573508253530"
+                    target="_blank"
+            >
+                WhatsApp
+            </a>
+
+            <a href="#">
+                TikTok
+            </a>
+
+            <a href="#">
+                Facebook
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script src="../js/productos.js"></script>
+<script src="../js/producto.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Catálogo | Zamana y Papelería</title>
+
+    <link
+            rel="stylesheet"
+            href="../css/styles.css"
+    >
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="main-header">
+
+    <button
+            id="menuButton"
+            class="header-icon"
+            type="button"
+    >
+        ☰
+    </button>
+
+
+    <a
+            href="../index.html"
+            class="brand"
+    >
+        Zamana y <span>Papelería</span>
+    </a>
+
+
+    <button
+            id="searchButton"
+            class="header-icon"
+            type="button"
+    >
+        ⌕
+    </button>
+
+</header>
+
+
+<!-- =====================================================
+     BUSCADOR
+===================================================== -->
+
+<div
+        id="searchBox"
+        class="search-panel hidden"
+>
+
+    <input
+            id="searchInput"
+            type="text"
+            placeholder="Buscar dentro de esta categoría..."
+    >
+
+    <button
+            id="searchSubmit"
+            type="button"
+    >
+        Buscar
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     MENÚ
+===================================================== -->
+
+<div
+        id="overlay"
+        class="menu-overlay"
+></div>
+
+
+<aside
+        id="sideMenu"
+        class="side-menu"
+>
+
+    <div class="side-menu-top">
+
+        <div>
+
+            <p class="menu-small">
+                Menú
+            </p>
+
+            <h2>
+                Categorías
+            </h2>
+
+        </div>
+
+
+        <button
+                id="closeMenu"
+                class="close-menu"
+                type="button"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <nav class="menu-links">
+
+        <a href="../index.html">
+            Inicio
+        </a>
+
+        <a href="catalogo.html?categoria=belleza">
+            Belleza
+        </a>
+
+        <a href="catalogo.html?categoria=papeleria">
+            Papelería
+        </a>
+
+        <a href="catalogo.html?categoria=accesorios">
+            Accesorios
+        </a>
+
+        <a href="catalogo.html?categoria=cajas">
+            Cajas
+        </a>
+
+        <a href="lista.html">
+            Mi lista
+        </a>
+
+    </nav>
+
+</aside>
+
+
+<!-- =====================================================
+     CATÁLOGO
+===================================================== -->
+
+<main class="catalog-page">
+
+
+    <div class="breadcrumb">
+
+        <a href="../index.html">
+            Inicio
+        </a>
+
+        <span>›</span>
+
+        <strong id="breadcrumbCategory">
+            Catálogo
+        </strong>
+
+    </div>
+
+
+    <section class="catalog-intro">
+
+        <span class="eyebrow">
+            CATÁLOGO
+        </span>
+
+        <h1 id="catalogTitle">
+            Productos
+        </h1>
+
+        <p id="productCount">
+            0 productos
+        </p>
+
+    </section>
+
+
+    <!-- =================================================
+         SELECTOR BELLEZA
+    ================================================= -->
+
+    <section
+            id="beautySectionSelector"
+            class="beauty-selector hidden"
+    >
+
+        <label for="beautySubcategorySelect">
+
+            ¿Qué quieres ver?
+
+        </label>
+
+
+        <select id="beautySubcategorySelect">
+
+            <option value="all">
+                Toda Belleza
+            </option>
+
+            <option value="Pestañas">
+                Pestañas — Destacado
+            </option>
+
+            <option value="Maquillaje">
+                Maquillaje
+            </option>
+
+            <option value="Uñas">
+                Uñas
+            </option>
+
+        </select>
+
+    </section>
+
+
+    <!-- =================================================
+         CONTROLES
+    ================================================= -->
+
+    <section class="catalog-toolbar">
+
+        <button
+                id="filterButton"
+                class="toolbar-button"
+                type="button"
+        >
+            Filtrar
+        </button>
+
+
+        <select
+                id="sortProducts"
+                class="sort-select"
+        >
+
+            <option value="default">
+                Ordenar
+            </option>
+
+            <option value="name">
+                Nombre A-Z
+            </option>
+
+            <option value="low">
+                Menor precio
+            </option>
+
+            <option value="high">
+                Mayor precio
+            </option>
+
+        </select>
+
+    </section>
+
+
+    <!-- =================================================
+         PRODUCTOS
+    ================================================= -->
+
+    <section
+            id="catalogProducts"
+            class="catalog-products"
+    >
+    </section>
+
+
+    <div
+            id="pagination"
+            class="pagination"
+    >
+    </div>
+
+</main>
+
+
+<!-- =====================================================
+     FILTROS
+===================================================== -->
+
+<div
+        id="filterOverlay"
+        class="filter-overlay"
+></div>
+
+
+<aside
+        id="filterPanel"
+        class="filter-panel"
+>
+
+    <div class="filter-header">
+
+        <div>
+
+            <span class="eyebrow">
+                FILTRAR
+            </span>
+
+            <h2 id="filterCategoryTitle">
+                Subcategorías
+            </h2>
+
+        </div>
+
+
+        <button
+                id="closeFilter"
+                class="close-menu"
+                type="button"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <div
+            id="filterOptions"
+            class="filter-options"
+    >
+    </div>
+
+
+    <div class="filter-actions">
+
+        <button
+                id="clearFilters"
+                class="btn btn-light"
+                type="button"
+        >
+            Limpiar
+        </button>
+
+        <button
+                id="applyFilters"
+                class="btn btn-primary"
+                type="button"
+        >
+            Aplicar filtros
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MI LISTA
+===================================================== -->
+
+<a
+        id="floatingListLink"
+        class="floating-list"
+        href="lista.html"
+>
+    Mi lista
+</a>
+
+
+<script src="../js/productos.js"></script>
+<script src="../js/catalogo.js"></script>
+
+</body>
+</html>

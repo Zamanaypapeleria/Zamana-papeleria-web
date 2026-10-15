@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mi lista | Zamana y Papelería</title>
+
+    <link
+            rel="stylesheet"
+            href="../css/styles.css"
+    >
+
+</head>
+
+<body>
+
+
+<header class="main-header">
+
+    <a
+            href="../index.html"
+            class="header-icon header-back"
+    >
+        ←
+    </a>
+
+
+    <a
+            href="../index.html"
+            class="brand"
+    >
+        Zamana y <span>Papelería</span>
+    </a>
+
+
+    <div class="header-spacer"></div>
+
+</header>
+
+
+<main class="list-page">
+
+
+    <div class="breadcrumb">
+
+        <a href="../index.html">
+            Inicio
+        </a>
+
+        <span>›</span>
+
+        <strong>
+            Mi lista
+        </strong>
+
+    </div>
+
+
+    <section class="list-heading">
+
+        <span class="eyebrow">
+            COTIZACIÓN
+        </span>
+
+        <h1>
+            Mi lista
+        </h1>
+
+        <p id="quoteProductCount">
+            0 productos
+        </p>
+
+    </section>
+
+
+    <div class="list-layout">
+
+
+        <!-- =================================================
+             PRODUCTOS
+        ================================================= -->
+
+        <section>
+
+            <div
+                    id="quoteItems"
+                    class="quote-items"
+            >
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RESUMEN
+        ================================================= -->
+
+        <aside class="quote-summary">
+
+            <span class="eyebrow">
+                TU PEDIDO
+            </span>
+
+            <h2>
+                Resumen
+            </h2>
+
+
+            <label for="quoteType">
+
+                Tipo de precio
+
+            </label>
+
+
+            <select id="quoteType">
+
+                <option value="detal">
+                    Precio detal
+                </option>
+
+                <option value="emprendedor">
+                    Precio emprendedor (-30 %)
+                </option>
+
+            </select>
+
+
+            <label for="customerName">
+
+                Tu nombre
+
+            </label>
+
+
+            <input
+                    id="customerName"
+                    type="text"
+                    placeholder="Nombre"
+            >
+
+
+            <label for="customerNotes">
+
+                Notas del pedido
+
+            </label>
+
+
+            <textarea
+                    id="customerNotes"
+                    rows="4"
+                    placeholder="Colores, referencias o indicaciones..."
+            ></textarea>
+
+
+            <div class="quote-total">
+
+                <span>
+                    Total estimado
+                </span>
+
+                <strong id="quoteTotal">
+                    $0
+                </strong>
+
+            </div>
+
+
+            <button
+                    id="sendWhatsApp"
+                    class="btn whatsapp-button full-button"
+                    type="button"
+            >
+                Enviar cotización por WhatsApp
+            </button>
+
+
+            <button
+                    id="clearList"
+                    class="btn btn-light full-button"
+                    type="button"
+            >
+                Vaciar lista
+            </button>
+
+        </aside>
+
+    </div>
+
+</main>
+
+
+<a
+        id="floatingListLink"
+        class="floating-list"
+        href="lista.html"
+>
+    Mi lista
+</a>
+
+
+<script src="../js/productos.js"></script>
+<script src="../js/lista.js"></script>
+
+</body>
+</html>
