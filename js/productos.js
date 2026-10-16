@@ -31,7 +31,7 @@ const categoriasZamana = [
     {
         id: "cajas",
         nombre: "Cajas",
-        imagen: "assets/images/CAJAS.jpeg"
+        imagen: "assets/images/cajas.jpeg"
     }
 
 ];
