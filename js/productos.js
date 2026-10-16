@@ -923,8 +923,8 @@ p(
 ),
 
 p(
-    "libros-pestanas",
-    "Libros de Pestañas",
+    "libros-pestanas-clasico",
+    "Libros de Pestañas efecto clasico",
     "belleza",
     "Pestañas",
     "Libro",
@@ -934,24 +934,60 @@ p(
             "30D",
             "40D",
             "50D",
-            "60D",
-            "80D",
-            "100D"
+
         ],
 
         imagenes: [
             "assets/images/belleza/LIBRO1.jpeg",
             "assets/images/belleza/LIBRO2.jpeg",
-            "assets/images/belleza/LIBRO3.jpeg",
+            "assets/images/belleza/LIBRO3.jpeg"
+        ],
+
+        destacado: true
+    }
+),
+p(
+    "libros-pestanas-ruso",
+    "Libros de Pestañas efecto volumen Ruso",
+    "belleza",
+    "Pestañas",
+    "Libro",
+    40000,
+    {
+        variantes: [
+            "60D",
+            "80D",
+            "100D",
+        ],
+
+        imagenes: [
             "assets/images/belleza/LIBRO4.jpeg",
             "assets/images/belleza/LIBRO5.jpeg",
             "assets/images/belleza/LIBRO6.jpeg",
-            "assets/images/belleza/LIBRO7.jpeg",
             "assets/images/belleza/LIBRO8.jpeg",
             "assets/images/belleza/LIBRO9.jpeg",
             "assets/images/belleza/LIBRO10.jpeg",
-            "assets/images/belleza/LIBRO11.jpeg",
-            "assets/images/belleza/LIBRO12.jpeg",
+            "assets/images/belleza/LIBRO12.jpeg"
+
+        ],
+
+        destacado: true
+    }
+),
+
+p(
+    "libros-pestanas-anime",
+    "Libros de Pestañas efecto ANIME",
+    "belleza",
+    "Pestañas",
+    "Libro",
+    35000,
+    {
+        variantes: [
+            "ANIME"
+        ],
+
+        imagenes: [
             "assets/images/belleza/LIBROANIME.jpeg",
             "assets/images/belleza/LIBROWISPY.jpeg",
             "assets/images/belleza/LIBROWISPY2.jpeg"
